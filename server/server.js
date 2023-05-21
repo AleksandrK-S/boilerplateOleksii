@@ -44,7 +44,7 @@ server.get('/*', (req, res) => {
   )
 })
 
-server.use('/api/', (req, res) => {
+server.get('/api/', (req, res) => {
   res.status(404)
   res.end()
 })

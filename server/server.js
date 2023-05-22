@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import axios from 'axios'
 import cors from 'cors'
 import sockjs from 'sockjs'
 import cookieParser from 'cookie-parser'
@@ -24,6 +25,21 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
+server.get('/api/v1/users/alex', (req, res) => {
+  res.send({ name: 'Alex' })
+})
+
+server.get('/api/v1/users', async (req, res) => {
+  const { data: users } = await axios("https://jsonplaceholder.typicode.com/users")
+  res.send(users)
+})
+
+server.get('/api/v1/users/take/:number', async (req, res) => {
+  const { number } = req.params
+  const { data: users } = await axios('https://jsonplaceholder.typicode.com/users')
+  res.json(users.slice(0, +number))
+})
+
 server.get('/', (req, res) => {
   res.send(`
     <h2>This is SkillCrucial Express Server!</h2>
@@ -44,10 +60,6 @@ server.get('/*', (req, res) => {
   )
 })
 
-server.get('/api/', (req, res) => {
-  res.status(404)
-  res.end()
-})
 
 const app = server.listen(port)
 

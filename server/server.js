@@ -30,7 +30,7 @@ server.get('/api/v1/users/alex', (req, res) => {
 })
 
 server.get('/api/v1/users', async (req, res) => {
-  const { data: users } = await axios("https://jsonplaceholder.typicode.com/users")
+  const { data: users } = await axios('https://jsonplaceholder.typicode.com/users')
   res.send(users)
 })
 
@@ -59,7 +59,6 @@ server.get('/*', (req, res) => {
     })
   )
 })
-
 
 const app = server.listen(port)
 
